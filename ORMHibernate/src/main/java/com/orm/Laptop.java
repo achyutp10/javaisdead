@@ -13,8 +13,8 @@ public class Laptop {
     private String model;
     private int ram;
 //
-    @ManyToOne
-    private Alien alien;
+//    @ManyToOne
+//    private Alien alien;
 
 
 //    @ManyToMany(mappedBy = "laptops")
@@ -61,13 +61,13 @@ public class Laptop {
 //    }
 
 
-    public Alien getAlien() {
-        return alien;
-    }
-
-    public void setAlien(Alien alien) {
-        this.alien = alien;
-    }
+//    public Alien getAlien() {
+//        return alien;
+//    }
+//
+//    public void setAlien(Alien alien) {
+//        this.alien = alien;
+//    }
 
     @Override
     public String toString() {
