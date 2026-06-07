@@ -172,14 +172,42 @@ public class Main {
         l2.setModel("pro");
         l2.setRam(16);
 
+        Laptop l3 = new Laptop();
+        l3.setLid(3);
+        l3.setBrand("Macbook");
+        l3.setModel("Air");
+        l3.setRam(8);
+
 
         Alien a1 = new Alien();
         a1.setAid(101);
         a1.setaName("Achyut");
         a1.setTech("Java");
         a1.setLaptops(Arrays.asList(l1,l2));
-        l1.setAlien(a1);
-        l2.setAlien(a1);
+
+
+        Alien a2 = new Alien();
+        a2.setAid(102);
+        a2.setaName("Navin");
+        a2.setTech("Java Core");
+
+
+        Alien a3 = new Alien();
+        a3.setAid(103);
+        a3.setaName("Hari");
+        a3.setTech("Dot net");
+
+
+        a1.setLaptops(Arrays.asList(l1,l2));
+        a2.setLaptops(Arrays.asList(l2,l3));
+        a3.setLaptops(Arrays.asList(l1));
+
+
+
+        l1.setAlien(Arrays.asList(a1,a3));
+        l2.setAlien(Arrays.asList(a1,a2));
+        l3.setAlien(Arrays.asList(a1));
+
 
         SessionFactory sf = new Configuration().
                 addAnnotatedClass(com.orm.Alien.class)
@@ -189,14 +217,18 @@ public class Main {
 
         Session session = sf.openSession();
         Transaction transaction = session.beginTransaction();
-        session.persist(a1);
-        session.persist(l2);
         session.persist(l1);
+        session.persist(l2);
+        session.persist(l3);
+
+        session.persist(a1);
+        session.persist(a2);
+        session.persist(a3);
 
         transaction.commit();
 
-        Alien a2 = session.find(Alien.class,101);
-        System.out.println(a2);
+        Alien a5 = session.find(Alien.class,102);
+        System.out.println(a5);
 
         session.close();
         sf.close();
