@@ -6,6 +6,7 @@ import java.util.List;
 
 //@Embeddable
 @Entity
+@Cacheable
 public class Laptop {
     @Id
     private int lid;

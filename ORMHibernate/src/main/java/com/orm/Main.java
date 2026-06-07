@@ -242,56 +242,125 @@
 //}
 
 // HQL
+//package com.orm;
+//
+//import org.hibernate.Session;
+//import org.hibernate.SessionFactory;
+//import org.hibernate.Transaction;
+//import org.hibernate.cfg.Configuration;
+//import org.hibernate.query.Query;
+//
+//import java.util.Arrays;
+//import java.util.List;
+//import java.util.Queue;
+//
+//public class Main {
+//    public static void main(String[] args) {
+//
+//        SessionFactory sf = new Configuration()
+//                .addAnnotatedClasses(com.orm.Laptop.class)
+//                .configure().
+//                buildSessionFactory();
+//
+//        Session session = sf.openSession();
+//
+//        // Select * from laptop where ram=32; ==> SQL
+//        // from laptop where ram=32 ==> HQL
+//
+////        Query query = session.createQuery("from Laptop");
+////        Query query = session.createQuery("from Laptop where ram=32", Laptop.class);
+//        String brand = "Asus";
+//        int ram = 32;
+////        Query query = session.createQuery("select model from Laptop where brand like ?1 and ram=?2");
+//        Query query = session.createQuery("select brand, model from Laptop where brand like ?1 and ram=?2");
+//
+//        query.setParameter(1, brand);
+//        query.setParameter(2, ram);
+//
+////        List<Laptop> laptops =  query.getResultList();
+//
+////        List<String> laptops =  query.getResultList();
+//        List<Object[]> laptops =  query.getResultList();
+//
+//
+////        Laptop l1 = session.find(Laptop.class, 3);
+//        for (Object[] data : laptops) {
+//            System.out.println( (String) data[0] + " " + (String) data[1]);
+//        }
+//        System.out.println(laptops);
+//
+//        session.close();
+//        sf.close();
+//
+//
+//    }
+//}
+
+
+// Get VS Load
+//package com.orm;
+//
+//import org.hibernate.Session;
+//import org.hibernate.SessionFactory;
+//import org.hibernate.cfg.Configuration;
+//
+//public class Main {
+//    public static void main(String[] args) {
+//
+//        SessionFactory sf = new Configuration()
+//                .addAnnotatedClasses(com.orm.Laptop.class)
+//                .configure().
+//                buildSessionFactory();
+//
+//        Session session = sf.openSession();
+//
+//        Laptop laptop = session.find(Laptop.class,2);
+//
+////        Laptop laptop = session.byId(Laptop.class).load(2);
+////        Laptop laptop = session.byId(Laptop.class).getReference(Laptop.class, 2);
+//
+//        System.out.println(laptop);
+//
+//
+//        session.close();
+//        sf.close();
+//
+//
+//    }
+//}
+
+
+// L2 cache using Ehcache
 package com.orm;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.Transaction;
 import org.hibernate.cfg.Configuration;
-import org.hibernate.query.Query;
-
-import java.util.Arrays;
-import java.util.List;
-import java.util.Queue;
 
 public class Main {
     public static void main(String[] args) {
 
+
         SessionFactory sf = new Configuration()
-                .addAnnotatedClasses(com.orm.Laptop.class)
-                .configure().
-                buildSessionFactory();
+                .configure()
+                .addAnnotatedClass(Laptop.class)
+                .buildSessionFactory();
 
         Session session = sf.openSession();
 
-        // Select * from laptop where ram=32; ==> SQL
-        // from laptop where ram=32 ==> HQL
-
-//        Query query = session.createQuery("from Laptop");
-//        Query query = session.createQuery("from Laptop where ram=32", Laptop.class);
-        String brand = "Asus";
-        int ram = 32;
-//        Query query = session.createQuery("select model from Laptop where brand like ?1 and ram=?2");
-        Query query = session.createQuery("select brand, model from Laptop where brand like ?1 and ram=?2");
-
-        query.setParameter(1, brand);
-        query.setParameter(2, ram);
-
-//        List<Laptop> laptops =  query.getResultList();
-
-//        List<String> laptops =  query.getResultList();
-        List<Object[]> laptops =  query.getResultList();
-
-
-//        Laptop l1 = session.find(Laptop.class, 3);
-        for (Object[] data : laptops) {
-            System.out.println( (String) data[0] + " " + (String) data[1]);
-        }
-        System.out.println(laptops);
-
+        Laptop l1 = session.find(Laptop.class, 2);
+        System.out.println(l1);
         session.close();
+
+        Session session1 = sf.openSession();
+        Laptop l2 = session1.find(Laptop.class, 2);
+        System.out.println(l2);
+
+        session1.close();
+
         sf.close();
 
 
     }
+
 }
