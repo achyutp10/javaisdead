@@ -13,12 +13,12 @@ public class Laptop {
     private String model;
     private int ram;
 //
-//    @ManyToOne
-//    private Alien alien;
+    @ManyToOne
+    private Alien alien;
 
 
-    @ManyToMany(mappedBy = "laptops")
-    private List<Alien> alien;
+//    @ManyToMany(mappedBy = "laptops")
+//    private List<Alien> alien;
 
     public int getLid() {
         return lid;
@@ -52,11 +52,20 @@ public class Laptop {
         this.ram = ram;
     }
 
-    public List<Alien> getAlien() {
+//    public List<Alien> getAlien() {
+//        return alien;
+//    }
+//
+//    public void setAlien(List<Alien> alien) {
+//        this.alien = alien;
+//    }
+
+
+    public Alien getAlien() {
         return alien;
     }
 
-    public void setAlien(List<Alien> alien) {
+    public void setAlien(Alien alien) {
         this.alien = alien;
     }
 
