@@ -257,10 +257,6 @@ import java.util.Queue;
 public class Main {
     public static void main(String[] args) {
 
-
-
-
-
         SessionFactory sf = new Configuration()
                 .addAnnotatedClasses(com.orm.Laptop.class)
                 .configure().
@@ -272,10 +268,25 @@ public class Main {
         // from laptop where ram=32 ==> HQL
 
 //        Query query = session.createQuery("from Laptop");
-        Query query = session.createQuery("from Laptop where ram=32", Laptop.class);
-        List<Laptop> laptops =  query.getResultList();
+//        Query query = session.createQuery("from Laptop where ram=32", Laptop.class);
+        String brand = "Asus";
+        int ram = 32;
+//        Query query = session.createQuery("select model from Laptop where brand like ?1 and ram=?2");
+        Query query = session.createQuery("select brand, model from Laptop where brand like ?1 and ram=?2");
+
+        query.setParameter(1, brand);
+        query.setParameter(2, ram);
+
+//        List<Laptop> laptops =  query.getResultList();
+
+//        List<String> laptops =  query.getResultList();
+        List<Object[]> laptops =  query.getResultList();
+
 
 //        Laptop l1 = session.find(Laptop.class, 3);
+        for (Object[] data : laptops) {
+            System.out.println( (String) data[0] + " " + (String) data[1]);
+        }
         System.out.println(laptops);
 
         session.close();
