@@ -34,6 +34,7 @@ public class Transaction {
     private TransactionStatus transactionStatus;
 
     private String description;
+    private String note;
 
     private LocalDateTime updatedAt;
     private final LocalDateTime createdAt = LocalDateTime.now();
